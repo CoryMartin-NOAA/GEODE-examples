@@ -2,9 +2,9 @@
 #SBATCH --job-name=fv3jedi_hofx_atms
 #SBATCH --account=da-cpu
 #SBATCH --qos=batch
-#SBATCH --nodes=8
+#SBATCH --nodes=4
 #SBATCH --ntasks=96
-#SBATCH --ntasks-per-node=12
+#SBATCH --ntasks-per-node=24
 #SBATCH --time=00:30:00
 #SBATCH --exclusive
 #SBATCH --mem=0
