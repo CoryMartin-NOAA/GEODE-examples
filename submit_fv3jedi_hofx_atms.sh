@@ -346,6 +346,11 @@ variables:
   - longitude
   - brightnessTemperature
   - dateTime
+  - sensorZenithAngle
+  - sensorAzimuthAngle
+  - sensorViewAngle
+  - solarZenithAngle
+  - solarAzimuthAngle
 EOF
 
 # ---------------------------------------------------------------------------
