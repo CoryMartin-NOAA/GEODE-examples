@@ -25,7 +25,7 @@ cd "$test_dir"
 if [[ -d geode ]]; then
   rm -rf -- geode
 fi
-git clone --recursive -b feature/get https://github.com/noaa-emc/geode.git
+git clone --recursive https://github.com/noaa-emc/geode.git
 cd geode
 python -m pip install --user --no-build-isolation -e ".[dev]"
 
