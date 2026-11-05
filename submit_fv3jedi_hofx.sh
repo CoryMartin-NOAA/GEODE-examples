@@ -37,6 +37,7 @@ CRTM_FIX=${FIX}/crtm/20220805/2.3.0_jedi
 # Valid time of the background / center of the DA window
 WINDOW_BEGIN=2026-10-12T21:00:00Z
 WINDOW_LENGTH=PT6H
+WINDOW_END=2026-10-13T03:00:00Z
 VALID_TIME=2026-10-13T00:00:00Z
 
 # Background (C384, 127 levels); f006 from the 20261012 18z cycle is valid at VALID_TIME
@@ -432,14 +433,15 @@ observations:
       use data frame container: true
       obsdatain:
         engine:
-          type: H5File
+          type: GEODE
           obsfile: ./obs/${OBS_NAME}.nc
+          query file: ./obs/${OBS_NAME}.query.yaml
       obsdataout:
         engine:
           type: H5File
-          obsfile: ./diags/diag_${OBS_NAME}_iodanc.nc
+          obsfile: ./diags/diag_${OBS_NAME}_geode.nc
       io pool:
-        max pool size: 8
+        max pool size: 1
       observed variables: [spectralRadiance]
       derived variables: [brightnessTemperature]
       simulated variables: [brightnessTemperature]
@@ -466,7 +468,7 @@ observations:
           options:
             variables:
             - name: ObsValue/spectralRadiance
-              channels: *${OBS_NAME}_band1 
+              channels: *${OBS_NAME}_band1
             coefs: [62.5]
             intercept: 64937.5
             use channel numbers: true
@@ -481,7 +483,7 @@ observations:
           options:
             variables:
             - name: ObsValue/spectralRadiance
-              channels: *${OBS_NAME}_band2 
+              channels: *${OBS_NAME}_band2
             coefs: [62.5]
             intercept: 76375
             use channel numbers: true
@@ -517,15 +519,15 @@ observations:
     # Step 4: Create cloudFree variable
     - filter: Variable Assignment
       assignments:
-      - name: DerivedMetaData/cloudFree 
+      - name: DerivedMetaData/cloudFree
         type: int
         function:
           name: ObsFunction/Arithmetic
           options:
             variables:
             - name: ObsValue/cloudCoverTotal
-            coefs: [-100] 
-            intercept: 100 
+            coefs: [-100]
+            intercept: 100
 
     # Step 5: Data Thinning
     - filter: Gaussian Thinning
@@ -538,6 +540,24 @@ observations:
       priority_variable: DerivedMetaData/cloudFree
       action:
         name: reduce obs space
+EOF
+
+cat > obs/${OBS_NAME}.query.yaml <<EOF
+data type: cris_n20
+start time: ${WINDOW_BEGIN}
+end time: ${WINDOW_END}
+
+variables:
+  - latitude
+  - longitude
+  - spectralRadiance
+  - cloudCoverTotal
+  - dateTime
+  - sensorZenithAngle
+  - sensorAzimuthAngle
+  - sensorViewAngle
+  - solarZenithAngle
+  - solarAzimuthAngle
 EOF
 
 # ---------------------------------------------------------------------------
