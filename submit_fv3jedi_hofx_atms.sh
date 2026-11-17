@@ -24,7 +24,7 @@ set -x
 # User settings
 # ---------------------------------------------------------------------------
 BENCH=/scratch4/NCEPDEV/stmp/Cory.R.Martin/oct2026/ioda_benchmark
-GDASAPP=${BENCH}/gdasapp
+GDASAPP=/scratch4/NCEPDEV/stmp/Cory.R.Martin/nov2026/GDASApp
 INPUTS=${BENCH}/test_case/inputs
 EXEC=${GDASAPP}/build/bin/fv3jedi_hofx_nomodel.x
 MODULEFILE_DIR=${GDASAPP}/modulefiles
@@ -64,8 +64,11 @@ module use "${MODULEFILE_DIR}"
 module load "${MODULE}"
 
 # need to load venv
-module load rdhpcs-python/3.13
-source /scratch4/NCEPDEV/stmp/Cory.R.Martin/oct2026/geode-venv/bin/activate
+# below for spack-stack 1.9.1
+#module load rdhpcs-python/3.13
+#source /scratch4/NCEPDEV/stmp/Cory.R.Martin/oct2026/geode-venv/bin/activate
+# below for spack-stack 2.2.0
+source /scratch3/NCEPDEV/da/Cory.R.Martin/geode/envs/geode-ss2.2.0/bin/activate
 
 # Make sure the build's libraries are found at runtime
 export LD_LIBRARY_PATH=${GDASAPP}/build/lib:${LD_LIBRARY_PATH:-}
@@ -342,15 +345,16 @@ start time: ${WINDOW_BEGIN}
 end time: ${WINDOW_END}
 
 variables:
-  - latitude
-  - longitude
-  - brightnessTemperature
-  - dateTime
-  - sensorZenithAngle
-  - sensorAzimuthAngle
-  - sensorViewAngle
-  - solarZenithAngle
-  - solarAzimuthAngle
+  - MetaData/latitude
+  - MetaData/longitude
+  - ObsValue/brightnessTemperature
+  - MetaData/dateTime
+  - MetaData/sensorZenithAngle
+  - MetaData/sensorAzimuthAngle
+  - MetaData/sensorViewAngle
+  - MetaData/sensorScanPosition
+  - MetaData/solarZenithAngle
+  - MetaData/solarAzimuthAngle
 EOF
 
 # ---------------------------------------------------------------------------
