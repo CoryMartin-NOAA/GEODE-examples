@@ -3,9 +3,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-SOURCE_DIR="${ROOT}/ioda-internal"
-BUILD_DIR="${ROOT}/ioda-internal-build"
-INSTALL_DIR="${ROOT}/ioda-internal-install"
+SOURCE_DIR="${IODA_SOURCE_DIR:-${ROOT}/ioda-internal}"
+BUILD_DIR="${IODA_BUILD_DIR:-${ROOT}/ioda-internal-build}"
+INSTALL_DIR="${IODA_INSTALL_DIR:-${ROOT}/ioda-internal-install}"
 
 BUILD_TYPE="Release"
 BUILD_JOBS="${BUILD_JOBS:-4}"

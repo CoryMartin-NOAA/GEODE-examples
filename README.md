@@ -25,6 +25,13 @@ Configure the environment and build the IODA GEODE reader and synthetic reader t
 ./build_ioda_ursa_spack_stack_2.2.0.sh
 ```
 
+or
+
+```bash
+IODA_SOURCE_DIR="$PWD/ioda-test" IODA_BUILD_DIR="$PWD/ioda-test-build" IODA_INSTALL_DIR="$PWD/ioda-test-install" ./build_ioda_ursa_spack_stack_2.2.0.sh
+```
+
+
 To install the build:
 
 ```bash
